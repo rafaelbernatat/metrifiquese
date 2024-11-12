@@ -22,18 +22,47 @@
         metrifiqueseIframe.style.top = '0';
         metrifiqueseIframe.style.left = '0';
         metrifiqueseIframe.style.zIndex = '9999';
-        metrifiqueseIframe.style.display = 'none'; // Adiciona o display: none por padrão
+        metrifiqueseIframe.style.display = 'none'; // Oculta o iframe inicialmente
         metrifiqueseIframe.frameBorder = '0';
+
+        // Adicionar uma classe para controle adicional
+        metrifiqueseIframe.classList.add('metrifiquese-hidden');
 
         // Adicionar o iframe à página
         document.body.appendChild(metrifiqueseIframe);
 
+        // Estilos adicionais para controle de visibilidade
+        var style = document.createElement('style');
+        style.innerHTML = `
+            .metrifiquese-hidden {
+                display: none !important;
+                pointer-events: none; /* Ignora interações */
+            }
+            .metrifiquese-visible {
+                display: block !important;
+                pointer-events: auto;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Função para exibir o iframe
+        function showWidget() {
+            metrifiqueseIframe.classList.remove('metrifiquese-hidden');
+            metrifiqueseIframe.classList.add('metrifiquese-visible');
+        }
+
+        // Função para ocultar o iframe
+        function hideWidget() {
+            metrifiqueseIframe.classList.remove('metrifiquese-visible');
+            metrifiqueseIframe.classList.add('metrifiquese-hidden');
+        }
+
         // Exibir e ocultar o iframe conforme necessário
         window.addEventListener('message', function(event) {
             if (event.data.action === 'showWidget') {
-                metrifiqueseIframe.style.display = 'block'; // Mostra o iframe
+                showWidget();
             } else if (event.data.action === 'hideWidget') {
-                metrifiqueseIframe.style.display = 'none'; // Oculta o iframe
+                hideWidget();
             }
         });
 
