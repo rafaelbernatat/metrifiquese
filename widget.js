@@ -22,6 +22,7 @@
         metrifiqueseIframe.style.top = '0';
         metrifiqueseIframe.style.left = '0';
         metrifiqueseIframe.style.zIndex = '9999';
+        metrifiqueseIframe.style.display = 'none'; // Adiciona o display: none por padrão
         metrifiqueseIframe.frameBorder = '0';
 
         // Adicionar o iframe à página
@@ -30,9 +31,9 @@
         // Exibir e ocultar o iframe conforme necessário
         window.addEventListener('message', function(event) {
             if (event.data.action === 'showWidget') {
-                metrifiqueseIframe.style.display = 'block';
+                metrifiqueseIframe.style.display = 'block'; // Mostra o iframe
             } else if (event.data.action === 'hideWidget') {
-                metrifiqueseIframe.style.display = 'none';
+                metrifiqueseIframe.style.display = 'none'; // Oculta o iframe
             }
         });
 
