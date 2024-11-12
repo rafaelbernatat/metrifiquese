@@ -1,14 +1,7 @@
 (function() {
-    // Verifica se o objeto metrifiquese está definido
-    if (typeof metrifiquese !== 'undefined') {
-        var appId = metrifiquese.app_id;
-        var userId = metrifiquese.user_id;
-
-        // Verifica se app_id e user_id foram fornecidos
-        if (!appId) {
-            console.error('Erro: app_id é obrigatório.');
-            return;
-        }
+    if (typeof window.metrifiquese !== 'undefined') {
+        var userId = window.metrifiquese.user_id;
+        var userName = window.metrifiquese.user_name;
 
         if (!userId) {
             console.error('Erro: user_id é obrigatório.');
@@ -16,16 +9,11 @@
         }
 
         // Construir a URL do iframe com os parâmetros obrigatórios
-        var iframeUrl = 'https://www.metrifiquese.com.br/widget' + 
-                        '?app_id=' + encodeURIComponent(appId) +
-                        '&user_id=' + encodeURIComponent(userId);
+        var iframeUrl = 'https://www.metrifiquese.com.br/widget' +
+                        '?user_id=' + encodeURIComponent(userId) +
+                        '&user_name=' + encodeURIComponent(userName);
 
-        // Adiciona parâmetro opcional do nome do usuário, se definido
-        if (metrifiquese.user_name) {
-            iframeUrl += '&user_name=' + encodeURIComponent(metrifiquese.user_name);
-        }
-
-        // Cria o iframe e configura os estilos
+        // Criar o iframe e configurá-lo
         var metrifiqueseIframe = document.createElement('iframe');
         metrifiqueseIframe.src = iframeUrl;
         metrifiqueseIframe.style.width = '100%';
@@ -35,21 +23,20 @@
         metrifiqueseIframe.style.left = '0';
         metrifiqueseIframe.style.zIndex = '9999';
         metrifiqueseIframe.frameBorder = '0';
-        metrifiqueseIframe.allowFullscreen = true;
-        metrifiqueseIframe.style.display = 'none';
 
-        // Adiciona o iframe ao corpo da página
+        // Adicionar o iframe à página
         document.body.appendChild(metrifiqueseIframe);
 
-        // Escuta mensagens para mostrar ou ocultar o iframe
+        // Exibir e ocultar o iframe conforme necessário
         window.addEventListener('message', function(event) {
-            if (event.data.action === 'showMetrifiqueseWidget') {
+            if (event.data.action === 'showWidget') {
                 metrifiqueseIframe.style.display = 'block';
-            } else if (event.data.action === 'hideMetrifiqueseWidget') {
+            } else if (event.data.action === 'hideWidget') {
                 metrifiqueseIframe.style.display = 'none';
             }
         });
+
     } else {
-        console.error('Erro: objeto metrifiquese não foi definido.');
+        console.error('Erro: o objeto metrifiquese não foi definido.');
     }
 })();
