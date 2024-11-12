@@ -34,10 +34,11 @@
 
         // Função para mostrar o iframe quando o postMessage for recebido
         window.addEventListener('message', function(event) {
+                console.log('Mensagem recebida:', event.data);  // Log para verificar a mensagem recebida
             if (event.data.action === 'metrifiquese-showWidget') {
-                metrifiqueseIframe.style.display = 'block';
+                metrifiqueseIframe.style.display = 'block';  // Exibe o iframe
             } else if (event.data.action === 'metrifiquese-hideWidget') {
-                metrifiqueseIframe.style.display = 'none';
+                metrifiqueseIframe.style.display = 'none'; // Oculta o iframe
             }
         });
 
